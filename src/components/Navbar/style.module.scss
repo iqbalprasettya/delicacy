@@ -1,0 +1,16 @@
+@import "../../styles/base.scss";
+
+.navbar {
+    padding: 5px 20px;
+    background-color: $primary-color;
+    .nav-logo {
+        h1 {
+            color: $text-color-primary;
+            font-family: $font-primary;
+            font-size: 46px;
+            @include apply-at-md-size {
+                font-size: 32px;
+            }
+        }
+    }
+}

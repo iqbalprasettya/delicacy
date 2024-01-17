@@ -1,0 +1,61 @@
+@import "../../styles/base.scss";
+
+body {
+  color: $text-color-primary;
+  background-color: $primary-color;
+}
+
+.list-category {
+  .container {
+    @include wrapper;
+    .category {
+      @include row;
+      flex-wrap: wrap;
+      a {
+        color: $text-color-secondary;
+        font-family: $font-secondary;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 10px 5px;
+        margin: 5px;
+        @include apply-at-md-size {
+          font-size: 11px;
+          padding: 2px 5px;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  @include wrapper;
+  h2 {
+    margin-top: 20px;
+    font-family: $font-primary;
+    padding: 20px;
+  }
+  .menu::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  .menu {
+    @include row;
+    overflow: auto;
+    margin: 20px 0;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    gap: 20px;
+    @include wrapper;
+    @include apply-at-lg-size {
+      gap: 300px;
+    }
+  }
+  .list-card {
+    @include row;
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .list-card::-webkit-scrollbar {
+    display: none;
+  }
+}
