@@ -1,0 +1,12 @@
+@import "../../styles/base.scss";
+
+
+
+.container {
+    @include wrapper;
+    .list-card {
+        @include row;
+        flex-wrap: wrap;
+
+    }
+}

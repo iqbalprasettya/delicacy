@@ -28,7 +28,9 @@ body {
 }
 
 .container {
+  @include apply-at-lg-size {
   @include wrapper;
+  }
   h2 {
     margin-top: 20px;
     font-family: $font-primary;
@@ -44,9 +46,11 @@ body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     gap: 20px;
+    
     @include wrapper;
     @include apply-at-lg-size {
       gap: 300px;
+      padding: 30px;
     }
   }
   .list-card {
@@ -54,6 +58,10 @@ body {
     overflow: auto;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+    .link-detail {
+      text-decoration: none;
+      color: $text-color-primary;
+    }
   }
   .list-card::-webkit-scrollbar {
     display: none;

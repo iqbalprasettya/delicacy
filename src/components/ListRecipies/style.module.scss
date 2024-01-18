@@ -12,6 +12,7 @@
         background-color: $secondary-color;
         border-radius: 10px;
         width: 160px;
+        box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
         .body-text {
           padding: 90px 20px 30px 20px;
           background-color: $primary-color;
@@ -20,8 +21,14 @@
             position: absolute;
             top: -40px;
             left: 20%;
+            border-radius: 50%;
+            box-shadow: 0 8px 10px $shadow-color;
+            @include apply-at-lg-size {
+              width: 110px;
+            }
             @include apply-at-md-size {
-              left: 10%;
+              left: 20%;
+              width: 120px;
             }
           }
         }

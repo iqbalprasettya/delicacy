@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./style.module.scss";
 
-// import CallApi from "../../domain/api";
+import { callAPI } from "../../domain/api";
 
 import ListCard from "../../components/ListRecipies";
 import CardDetail from "../../components/CardDetail";
 
 const index = () => {
   const [data, setData] = useState(null);
+  const [randomData, setRandomData] = useState(null);
 
   useEffect(() => {
     fetchData();
+    fetchRandom();
   }, []);
 
   const fetchData = async () => {
@@ -20,18 +23,40 @@ const index = () => {
 
     const modifiedResponse = slicedResponse?.map(async (item) => {
       const responseByName = await callAPI(`/search.php?s=${item.strMeal}`, "GET");
-      const { idMeal, strIngredient1, strMeasure1, strMealThumb, strMeal } = responseByName.meals[0];
+      const { idMeal, strInstructions, strMeal, strCategory, strMealThumb, strIngredient1, strIngredient2, strIngredient3, strIngredient4, strMeasure1, strMeasure2, strMeasure3, strMeasure4 } = responseByName.meals[0];
       return {
         idMeal,
-        strIngredient1,
-        strMeasure1,
-        strMealThumb,
+        strInstructions,
         strMeal,
+        strCategory,
+        strMealThumb,
+        strIngredient1,
+        strIngredient2,
+        strIngredient3,
+        strIngredient4,
+        strMeasure1,
+        strMeasure2,
+        strMeasure3,
+        strMeasure4,
       };
     });
 
     const finalResponse = await Promise.all(modifiedResponse);
     setData(finalResponse);
+  };
+
+  const fetchRandom = async () => {
+    try {
+      const result = [];
+      for (let i = 0; i < 10; i++) {
+        result.push(callAPI("/random.php", "GET"));
+      }
+      const finalResponse = await Promise.all(result);
+      setRandomData(finalResponse?.map((e) => e.meals[0]));
+    } catch (error) {
+      console.log(error);
+    }
+
   };
   return (
     <>
@@ -44,7 +69,7 @@ const index = () => {
             <a href="">Lamb</a>
             <a href="">Miscellaneous</a>
             <a href="">Pasta</a>
-            <a href="">Favorite</a>
+            <a href="/favorites">Favorite</a>
           </div>
         </div>
       </div>
@@ -52,33 +77,25 @@ const index = () => {
       <div className={classes["container"]}>
         <div className={classes["menu"]}>
           {/* <CardDetail item={item} categoryValue={categoryValue} /> */}
-          <CardDetail />
-          <CardDetail />
-          <CardDetail />
-          <CardDetail />
-          <CardDetail />
+
+          {data?.map((item) => (
+            <>
+              <CardDetail data={item} />
+            </>
+          ))}
         </div>
       </div>
       <br />
       <div className={classes["container"]}>
         <h2>More recipies</h2>
         <div className={classes["list-card"]}>
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
-          <ListCard />
+          {randomData?.map((item) => (
+            <>
+              <Link className={classes["link-detail"]} to={`/details/${item.idMeal}`} key={item.id}>
+                <ListCard data={item} />
+              </Link>
+            </>
+          ))}
         </div>
       </div>
     </>
